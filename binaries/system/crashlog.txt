@@ -1,0 +1,15 @@
+The Atlas UI was not successfully loaded and therefore cannot be started as requested.
+Location: atlas.cpp:46 (ATLAS_Run)
+
+Call stack:
+
+772DFA29
+
+
+errno = 0 (No error reported here)
+OS error = 126 (The specified module could not be found.)
+
+
+
+====================================
+
