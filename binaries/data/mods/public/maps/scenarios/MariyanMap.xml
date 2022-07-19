@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Scenario version="7">
+	<Environment>
+		<SkySet>fog</SkySet>
+		<SunColor r="0.74902" g="0.74902" b="0.74902"/>
+		<SunElevation angle="0.785398"/>
+		<SunRotation angle="0.859029"/>
+		<AmbientColor r="0.501961" g="0.501961" b="0.501961"/>
+		<Fog>
+			<FogFactor>0</FogFactor>
+			<FogThickness>0.421875</FogThickness>
+			<FogColor r="0.8" g="0.8" b="0.898039"/>
+		</Fog>
+		<Water>
+			<WaterBody>
+				<Type>ocean</Type>
+				<Color r="0.298039" g="0.34902" b="0.698039"/>
+				<Tint r="0.278431" g="0.298039" b="0.588235"/>
+				<Height>5</Height>
+				<Waviness>4</Waviness>
+				<Murkiness>0.488281</Murkiness>
+				<WindAngle>0</WindAngle>
+			</WaterBody>
+		</Water>
+		<Postproc>
+			<Brightness>0</Brightness>
+			<Contrast>1</Contrast>
+			<Saturation>0.99</Saturation>
+			<Bloom>0.1999</Bloom>
+			<PostEffect>default</PostEffect>
+		</Postproc>
+	</Environment>
+	<Camera>
+		<Position x="300" y="113.467" z="244.037"/>
+		<Rotation angle="0"/>
+		<Declination angle="0.610865"/>
+	</Camera>
+	<ScriptSettings><![CDATA[
+{
+  "AISeed": 0,
+  "AllyView": false,
+  "CircularMap": true,
+  "Description": "Give an interesting description of your map.",
+  "Keywords": [],
+  "LockTeams": false,
+  "Name": "MariyanMap",
+  "PlayerData": [
+    {
+      "AI": "petra",
+      "Civ": "pers",
+      "Name": "Player 1",
+      "StartingCamera": {
+        "Position": {
+          "x": 300,
+          "y": 44.5217,
+          "z": 342.501
+        },
+        "Rotation": {
+          "x": 35,
+          "y": 0,
+          "z": 0
+        }
+      }
+    },
+    {
+      "Civ": "cart"
+    }
+  ],
+  "Preview": "",
+  "RevealMap": false,
+  "VictoryConditions": [
+    "conquest"
+  ]
+}
+]]></ScriptSettings>
+	<Entities>
+		<Entity uid="11">
+			<Template>gaia/fauna_bear_black</Template>
+			<Player>0</Player>
+			<Position x="267.44956" z="332.8032"/>
+			<Orientation y="2.35621"/>
+			<Actor seed="16708"/>
+		</Entity>
+		<Entity uid="12">
+			<Template>gaia/fauna_bear_black</Template>
+			<Player>0</Player>
+			<Position x="266.39725" z="318.2765"/>
+			<Orientation y="2.35621"/>
+			<Actor seed="29063"/>
+		</Entity>
+		<Entity uid="13">
+			<Template>structures/kush/outpost</Template>
+			<Player>0</Player>
+			<Position x="296.54407" z="347.56763"/>
+			<Orientation y="2.35621"/>
+			<Actor seed="551"/>
+		</Entity>
+		<Entity uid="14">
+			<Template>structures/kush/outpost</Template>
+			<Player>0</Player>
+			<Position x="420.77332" z="472.94516"/>
+			<Orientation y="2.35621"/>
+			<Actor seed="30277"/>
+		</Entity>
+		<Entity uid="15">
+			<Template>structures/kush/defense_tower</Template>
+			<Player>0</Player>
+			<Position x="219.51761" z="429.96189"/>
+			<Orientation y="2.34641"/>
+			<Actor seed="1364"/>
+		</Entity>
+		<Entity uid="16">
+			<Template>structures/kush/defense_tower</Template>
+			<Player>0</Player>
+			<Position x="310.8082" z="627.51044"/>
+			<Orientation y="2.35621"/>
+			<Actor seed="4227"/>
+		</Entity>
+		<Entity uid="19">
+			<Template>units/brit/infantry_javelineer_e</Template>
+			<Player>0</Player>
+			<Position x="286.91633" z="289.11927"/>
+			<Orientation y="2.35621"/>
+			<Actor seed="16724"/>
+		</Entity>
+		<Entity uid="20">
+			<Template>units/brit/infantry_javelineer_e</Template>
+			<Player>0</Player>
+			<Position x="517.63843" z="494.04249"/>
+			<Orientation y="2.35621"/>
+			<Actor seed="23185"/>
+		</Entity>
+		<Entity uid="21">
+			<Template>units/cart/infantry_spearman_b</Template>
+			<Player>0</Player>
+			<Position x="237.38794" z="432.24131"/>
+			<Orientation y="2.35621"/>
+			<Actor seed="32351"/>
+		</Entity>
+		<Entity uid="22">
+			<Template>units/cart/infantry_spearman_b</Template>
+			<Player>0</Player>
+			<Position x="350.43931" z="584.21607"/>
+			<Orientation y="2.35621"/>
+			<Actor seed="30836"/>
+		</Entity>
+		<Entity uid="23">
+			<Template>units/maur/infantry_spearman_a</Template>
+			<Player>0</Player>
+			<Position x="323.08863" z="483.93915"/>
+			<Orientation y="2.35621"/>
+			<Actor seed="23301"/>
+		</Entity>
+		<Entity uid="24">
+			<Template>units/athen/cavalry_javelineer_a</Template>
+			<Player>0</Player>
+			<Position x="181.6533" z="447.68567"/>
+			<Orientation y="2.35621"/>
+			<Actor seed="32562"/>
+		</Entity>
+		<Entity uid="25">
+			<Template>units/athen/cavalry_javelineer_a</Template>
+			<Player>0</Player>
+			<Position x="357.09784" z="334.35526"/>
+			<Orientation y="2.35621"/>
+			<Actor seed="19478"/>
+		</Entity>
+	</Entities>
+	<Paths/>
+</Scenario>

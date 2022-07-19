@@ -1663,6 +1663,9 @@ static BOOL CALLBACK dump_sym_cb(SYMBOL_INFOW* sym, ULONG UNUSED(size), PVOID us
 	const u8* p = (const u8*)(uintptr_t)sym->Address;
 	DumpState state((uintptr_t)sym->ModBase, (LPSTACKFRAME64)userContext);
 
+	//if (!p)
+	//	return TRUE;
+
 	INDENT;
 	Status err = dump_sym(sym->Index, p, state);
 	dump_error(err);
