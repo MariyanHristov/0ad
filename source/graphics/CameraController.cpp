@@ -48,6 +48,7 @@ extern int g_xres, g_yres;
 // Maximum distance outside the edge of the map that the camera's
 // focus point can be moved
 static const float CAMERA_EDGE_MARGIN = 2.0f * TERRAIN_TILE_SIZE;
+const int MIN_RAD_FOV = 0.17453293, MAX_RAD_FOV = 2.96705973;
 
 CCameraController::CCameraController(CCamera& camera)
 	: ICameraController(camera),
@@ -79,6 +80,8 @@ CCameraController::CCameraController(CCamera& camera)
 	  m_ViewFar(4096.f),
 	  m_HeightSmoothness(0.5f),
 	  m_HeightMin(16.f),
+	  m_MinFOV(0),
+	  m_MaxFOV(0),
 
 	  m_PosX(0, 0, 0.01f),
 	  m_PosY(0, 0, 0.01f),
@@ -125,6 +128,9 @@ void CCameraController::LoadConfig()
 	CFG_GET_VAL("view.height.smoothness", m_HeightSmoothness);
 	CFG_GET_VAL("view.height.min", m_HeightMin);
 
+	CFG_GET_VAL("view.fov.min", m_MinFOV);
+	CFG_GET_VAL("view.fov.max", m_MaxFOV);
+
 #define SETUP_SMOOTHNESS(CFG_PREFIX, SMOOTHED_VALUE) \
 	{ \
 		float smoothness = SMOOTHED_VALUE.GetSmoothness(); \
@@ -148,6 +154,8 @@ void CCameraController::LoadConfig()
 	m_RotateX.SetValue(DEGTORAD(m_ViewRotateXDefault));
 	m_RotateY.SetValue(DEGTORAD(m_ViewRotateYDefault));
 	m_ViewFOV = DEGTORAD(m_ViewFOV);
+	m_MinFOV = DEGTORAD(m_MinFOV);
+	m_MaxFOV = DEGTORAD(m_MaxFOV);
 }
 
 void CCameraController::SetViewport(const SViewPort& vp)
@@ -174,6 +182,15 @@ void CCameraController::Update(const float deltaRealTime)
 		m_RotateX.AddSmoothly(-m_ViewRotateXSpeed * deltaRealTime);
 	if (HotkeyIsPressed("camera.rotate.down"))
 		m_RotateX.AddSmoothly(m_ViewRotateXSpeed * deltaRealTime);
+
+	//Added FOV Control
+	double fovDelta = 0;
+	if (HotkeyIsPressed("camera.fov.increase")) //added FOV Increase hotkey
+		fovDelta = 0.01;
+	if (HotkeyIsPressed("camera.fov.decrease"))//added FOV Decrease hotkey
+		fovDelta = -0.01;
+	if(fovDelta!=0)
+		m_ViewFOV = Clamp<float>(m_ViewFOV + fovDelta, m_MinFOV, m_MaxFOV);
 
 	float moveRightward = 0.f;
 	float moveForward = 0.f;
@@ -429,7 +446,13 @@ float CCameraController::GetCameraZoom() const
 	return m_Zoom.GetValue();
 }
 
-void CCameraController::SetCamera(const CVector3D& pos, float rotX, float rotY, float zoom)
+
+float CCameraController::GetCameraFOV() const
+{
+	return m_ViewFOV;
+}
+
+void CCameraController::SetCamera(const CVector3D& pos, float rotX, float rotY, float zoom, float fov)
 {
 	m_PosX.SetValue(pos.X);
 	m_PosY.SetValue(pos.Y);
@@ -437,7 +460,7 @@ void CCameraController::SetCamera(const CVector3D& pos, float rotX, float rotY, 
 	m_RotateX.SetValue(rotX);
 	m_RotateY.SetValue(rotY);
 	m_Zoom.SetValue(zoom);
-
+	m_ViewFOV = fov;
 	FocusHeight(false);
 
 	SetupCameraMatrixNonSmooth(&m_Camera.m_Orientation);
