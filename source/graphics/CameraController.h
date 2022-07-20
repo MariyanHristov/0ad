@@ -37,7 +37,9 @@ public:
 	CVector3D GetCameraRotation() const override;
 	float GetCameraZoom() const override;
 
-	void SetCamera(const CVector3D& pos, float rotX, float rotY, float zoom) override;
+	float GetCameraFOV() const override;
+
+	void SetCamera(const CVector3D& pos, float rotX, float rotY, float zoom, float fov) override;
 	void MoveCameraTarget(const CVector3D& target) override;
 	void ResetCameraTarget(const CVector3D& target) override;
 	void FollowEntity(entity_id_t entity, bool firstPerson) override;
@@ -110,6 +112,8 @@ private:
 	float m_ViewFar;
 	float m_HeightSmoothness;
 	float m_HeightMin;
+	float m_MinFOV;
+	float m_MaxFOV;
 
 	// Camera Controls State
 	CSmoothedValue m_PosX;
