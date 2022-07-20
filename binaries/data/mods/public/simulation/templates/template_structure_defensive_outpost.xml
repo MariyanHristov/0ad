@@ -10,6 +10,21 @@
       <MinDistance>50</MinDistance>
     </Distance>
   </BuildRestrictions>
+  <Attack>
+    <Ranged>
+      <AttackName>Bow</AttackName>
+      <Damage>
+        <Pierce>0</Pierce>
+      </Damage>
+      <MaxRange>60</MaxRange>
+      <PrepareTime>1200</PrepareTime>
+      <RepeatTime>2000</RepeatTime>
+      <PreferredClasses datatype="tokens">Human</PreferredClasses>
+    </Ranged>
+  </Attack>
+  <OutpostDetect>
+    <DefaultArrowCount>10</DefaultArrowCount>
+  </OutpostDetect>
   <Cost>
     <BuildTime>30</BuildTime>
     <Resources>
