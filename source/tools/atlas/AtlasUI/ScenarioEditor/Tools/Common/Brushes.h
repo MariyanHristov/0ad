@@ -117,6 +117,23 @@ private:
 	int m_Size;
 };
 
+class BrushShapeX : public BrushShape
+{
+public:
+	BrushShapeX() : m_Size(5) {}
+	virtual ~BrushShapeX() {}
+
+	virtual int GetDataWidth() const override { return m_Size; }
+	virtual int GetDataHeight() const override { return m_Size; }
+	virtual std::vector<float> GetData() const override;
+	virtual int GetSize() override { return m_Size; }
+	virtual void SetSize(int size) override { m_Size = size; }
+	static const int id = 4;
+	virtual int GetID() const override { return id; }
+private:
+	int m_Size;
+};
+
 class Brush
 {
 	friend class BrushShapeCtrl;
@@ -136,6 +153,8 @@ public:
 	void SetSquare(int size);
 	void SetPyramid(int size);
 	void SetRidge(int size);
+	void SetX(int size);
+	/*void SetShape(int id, int size);*/
 	float GetStrength() const { return m_Shape->GetStrength(); };
 	/*void SetStrength(float strength); */
 

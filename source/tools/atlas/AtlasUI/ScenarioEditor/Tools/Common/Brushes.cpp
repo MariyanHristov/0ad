@@ -82,6 +82,36 @@ void Brush::SetRidge(int size)
 	m_Shape->SetSize(size);
 }
 
+void Brush::SetX(int size)
+{
+	m_Shape.reset(new BrushShapeX());
+	m_Shape->SetSize(size);
+}
+
+//void Brush::SetShape(int id, int size)
+//{
+//	switch(id)
+//	{
+//	case 3:
+//		m_Shape.reset(new BrushShapeCircle());
+//		m_Shape->SetSize(size);
+//		break;
+//	case 2:
+//		m_Shape.reset(new BrushShapePyramid());
+//		m_Shape->SetSize(size);
+//		break;
+//	case 1:
+//		m_Shape.reset(new BrushShapeSquare());
+//		m_Shape->SetSize(size);
+//		break;
+//	case 0:
+//	default:
+//		m_Shape.reset(new BrushShapeCircle());
+//		m_Shape->SetSize(size);
+//		break;
+//	}
+//}
+
 //////////////////////////////////////////////////////////////////////////
 
 class BrushShapeCtrl : public wxRadioBox
@@ -102,6 +132,8 @@ private:
 	{
 		switch (GetSelection())
 		{
+			case 4: m_Brush.m_Shape = std::make_unique<BrushShapeX>();
+				break;
 			case 3: m_Brush.m_Shape = std::make_unique<BrushShapeRidge>();
 				break;
 			case 2: m_Brush.m_Shape = std::make_unique<BrushShapePyramid>();
@@ -111,13 +143,6 @@ private:
 			case 0:
 			default: m_Brush.m_Shape = std::make_unique<BrushShapeCircle>();
 				break;
-		/*case 1: m_Brush.m_Shape = std::make_unique<BrushShapeSquare>();
-			break;
-		case 2: m_Brush.m_Shape = std::make_unique<BrushShapePyramid>();
-			break;
-		case 3: m_Brush.m_Shape = std::make_unique<BrushShapeRidge>();
-			break;
-		default: m_Brush.m_Shape = std::make_unique<BrushShapeCircle>();*/
 		}
 		m_Brush.Send();
 	}
@@ -189,6 +214,7 @@ void Brush::CreateUI(wxWindow* parent, wxSizer* sizer)
 	shapes.Add(_("Square"));
 	shapes.Add(_("Pyramid"));
 	shapes.Add(_("Ridge"));
+	shapes.Add(_("X"));
 	// TODO (maybe): get rid of the extra static box, by not using wxRadioBox
 	sizer->Add(new BrushShapeCtrl(parent, shapes, *this), wxSizerFlags().Expand());
 
@@ -212,8 +238,8 @@ std::vector<float> BrushShapeCircle::GetData() const
 {
 	int width = GetDataWidth();
 	int height = GetDataHeight();
-	int r = height / 2;
-
+	int midX = height / 2;
+	int midY = width / 2;
 	std::vector<float> data(width * height);
 	int n = 0;
 	for (size_t i = 0; i < height; i++)
@@ -221,10 +247,10 @@ std::vector<float> BrushShapeCircle::GetData() const
 		for (size_t j = 0; j < width; j++)
 		{
 			//data[n++] = 1.f -(abs((height / 2.0) - i) + abs((width / 2.0) - j)) / (height / sqrt(2));
-			if (dist(i, j, height / 2, width / 2) > r)
+			if (dist(i, j, height / 2, width / 2) > midX)
 				data[n++] = 0.f;
 			else
-				data[n++] = 1.f - (float)(dist(i, j, height / 2.0, width / 2.0) / r);
+				data[n++] = 1.f - (float)(dist(i, j, midX, midY) / midX);
 		}
 	}
 
@@ -238,7 +264,6 @@ std::vector<float> BrushShapeSquare::GetData() const
 
 	std::vector<float> data(width * height);
 	int i = 0;
-	float v = width / 2, u = height / 2;
 
 	for (int y = 0; y < height; ++y)
 		for (int x = 0; x < width; ++x)
@@ -254,15 +279,16 @@ std::vector<float> BrushShapePyramid::GetData() const
 
 	std::vector<float> data(width * height);
 	int i = 0;
-	float v = width / 2, u = height / 2;
+	float midX = width / 2, midY = height / 2;
 	for (int y = 0; y < height; ++y)
+	{
 		for (int x = 0; x < width; ++x)
 		{
-			float a = 1.f - (float)(abs(v - x)) / v;
-			float b = 1.f - (float)(abs(u - y)) / u;
-			if (b < a)a = b;
-			data[i++] = a;
+			float a = 1.f - (float)(abs(midX - x)) / midX;
+			float b = 1.f - (float)(abs(midY - y)) / midY;
+			(b < a) ? data[i++] = b : data[i++] = a;
 		}
+	}
 
 	return data;
 }
@@ -274,13 +300,41 @@ std::vector<float> BrushShapeRidge::GetData() const
 
 	std::vector<float> data(width * height);
 	int i = 0;
-	float v = width / 2, u = height / 2;
+	float midX = width / 2, midY = height / 2;
 	for (int y = 0; y < height; ++y)
+	{
 		for (int x = 0; x < width; ++x)
 		{
-			float a = 1.f - (float)(abs(v - x)) / v;
+			float a = 1.f - (float)(abs(midX - x)) / midX;
 			data[i++] = a;
 		}
+	}
+
+	return data;
+}
+
+std::vector<float> BrushShapeX::GetData() const
+{
+	int width = GetDataWidth();
+	int height = GetDataHeight();
+
+	std::vector<float> data(width * height);
+	int i = 0;
+	for (int y = 0; y < height; ++y)
+	{
+		for (int x = 0; x < width; ++x)
+		{
+			if (y == x)
+			{
+				data[i++] = 1.f;
+			}
+			else
+				if (x + y == m_Size - 1)
+					data[i++] = 1.f;
+				else
+				    data[i++] = 0.f;
+		}
+	}
 
 	return data;
 }

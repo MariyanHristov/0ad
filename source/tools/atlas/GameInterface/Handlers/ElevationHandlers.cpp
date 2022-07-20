@@ -83,6 +83,10 @@ public:
 		return get(Clamp<ssize_t>(x, 0, m_VertsPerSide - 1), Clamp<ssize_t>(y, 0, m_VertsPerSide - 1));
 	}
 
+	ssize_t GetVertsPerSide()
+	{
+		return m_VertsPerSide - 1;  //-1 because 1 more vert is kept
+	}
 protected:
 	u16 getOld(ssize_t x, ssize_t y)
 	{
@@ -455,5 +459,67 @@ BEGIN_COMMAND(PikeElevation)
 	}
 };
 END_COMMAND(PikeElevation)
+
+BEGIN_COMMAND(DisplaceElevation)
+{
+	TerrainArray m_TerrainDelta;
+	ssize_t m_i0, m_j0, m_i1, m_j1; // dirtied tiles (inclusive lower bound, exclusive upper)
+
+	cDisplaceElevation()
+	{
+		m_TerrainDelta.Init();
+	}
+
+	void MakeDirty()
+	{
+		g_Game->GetWorld()->GetTerrain()->MakeDirty(m_i0, m_j0, m_i1, m_j1, RENDERDATA_UPDATE_VERTICES);
+		g_Game->GetWorld()->GetUnitManager().MakeTerrainDirty(m_i0, m_j0, m_i1, m_j1, RENDERDATA_UPDATE_VERTICES);
+		CmpPtr<ICmpTerrain> cmpTerrain(*g_Game->GetSimulation2(), SYSTEM_ENTITY);
+		if (cmpTerrain)
+			cmpTerrain->MakeDirty(m_i0, m_j0, m_i1, m_j1);
+	}
+
+	void Do()
+	{
+		/*int amount = (int)msg->amount;*/
+
+		static CVector3D previousPosition;
+		g_CurrentBrush.m_Centre = msg->pos->GetWorldSpace(previousPosition);
+		previousPosition = g_CurrentBrush.m_Centre;
+
+		ssize_t verts = m_TerrainDelta.GetVertsPerSide();
+
+		for (ssize_t y = 0; y < verts; ++y)
+		{
+			for (ssize_t x = 0; x < verts; ++x)
+			{
+				float ThreeDFunction = sin(5 * x) * cos(5 * y) / 5;
+				m_TerrainDelta.RaiseVertex(x, y, ThreeDFunction*1024);
+			}
+		}
+	}
+
+	void Undo()
+	{
+		m_TerrainDelta.Undo();
+		MakeDirty();
+	}
+
+	void Redo()
+	{
+		m_TerrainDelta.Redo();
+		MakeDirty();
+	}
+
+	void MergeIntoPrevious(cDisplaceElevation* prev)
+	{
+		prev->m_TerrainDelta.OverlayWith(m_TerrainDelta);
+		prev->m_i0 = std::min(prev->m_i0, m_i0);
+		prev->m_j0 = std::min(prev->m_j0, m_j0);
+		prev->m_i1 = std::max(prev->m_i1, m_i1);
+		prev->m_j1 = std::max(prev->m_j1, m_j1);
+	}
+};
+END_COMMAND(DisplaceElevation)
 
 }

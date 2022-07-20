@@ -632,7 +632,7 @@ wxToolBar* ScenarioEditor::OnCreateToolBar(long style, wxWindowID id, const wxSt
 	toolbar->AddToolButton(_("Flatten"),       _("Flatten terrain elevation"), _T("flattenelevation.png"), _T("FlattenElevation"), _T("")/*_T("TerrainSidebar")*/);
 	toolbar->AddToolButton(_("Paint Terrain"), _("Paint terrain texture"),     _T("paintterrain.png"),     _T("PaintTerrain"),     _T("")/*_T("TerrainSidebar")*/);
 	toolbar->AddToolButton(_("Move"),          _("Move cinema path nodes"),    _T("movepath.png"),         _T("TransformPath"),    _T("")/*_T("CinemaSidebar")*/);
-
+	toolbar->AddToolButton(_("Displacement"),  _("Displace objects"),          _T("displace.png"),         _T("DisplaceElevation"),_T("")/*_T("CinemaSidebar")*/);
 	return toolbar;
 }
 

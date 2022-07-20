@@ -194,7 +194,7 @@ TerrainSidebar::TerrainSidebar(ScenarioEditor& scenarioEditor, wxWindow* sidebar
 		/////////////////////////////////////////////////////////////////////////
 		// Terrain elevation
 		wxSizer* sizer = new wxStaticBoxSizer(wxVERTICAL, scrolledWindow, _("Elevation tools"));
-		wxSizer* gridSizer = new wxGridSizer(4);
+		wxSizer* gridSizer = new wxGridSizer(5);
 		gridSizer->Add(Tooltipped(new ToolButton(scenarioEditor.GetToolManager(), scrolledWindow, _("Modify"), _T("AlterElevation"), wxSize(48, -1)),
 			_("Brush with left mouse buttons to raise terrain,\nright mouse button to lower it")), wxSizerFlags().Expand());
 		gridSizer->Add(Tooltipped(new ToolButton(scenarioEditor.GetToolManager(), scrolledWindow, _("Ridge"), _T("PikeElevation"), wxSize(48, -1)),
@@ -203,6 +203,8 @@ TerrainSidebar::TerrainSidebar(ScenarioEditor& scenarioEditor, wxWindow* sidebar
 			_("Brush with left mouse button to smooth terrain,\nright mouse button to roughen it")), wxSizerFlags().Expand());
 		gridSizer->Add(Tooltipped(new ToolButton(scenarioEditor.GetToolManager(), scrolledWindow, _("Flatten"), _T("FlattenElevation"), wxSize(48, -1)),
 			_("Brush with left mouse button to flatten terrain")), wxSizerFlags().Expand());
+		gridSizer->Add(Tooltipped(new ToolButton(scenarioEditor.GetToolManager(), scrolledWindow, _("Displace"), _T("DisplaceElevation"), wxSize(48, -1)),
+			_("Brush with left mouse button to displace terrain")), wxSizerFlags().Expand());
 		sizer->Add(gridSizer, wxSizerFlags().Expand());
 		scrollSizer->Add(sizer, wxSizerFlags().Expand().Border(wxTOP, 10));
 	}
