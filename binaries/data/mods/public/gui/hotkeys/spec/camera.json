@@ -11,6 +11,14 @@
 				"name": "Reset Camera",
 				"desc": "Reset camera rotation to default."
 			},
+			"camera.fov.increase": {
+				"name": "Increase FOV",
+				"desc": "Increase FOV."
+			},
+			"camera.fov.decrease": {
+				"name": "Decrease FOV",
+				"desc": "Decrease FOV."
+			},
 			"camera.follow": {
 				"name": "Follow Unit",
 				"desc": "Follow the first unit in the selection."
