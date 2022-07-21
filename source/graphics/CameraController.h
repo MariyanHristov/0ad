@@ -37,7 +37,7 @@ public:
 	CVector3D GetCameraRotation() const override;
 	float GetCameraZoom() const override;
 
-	float GetCameraFOV() const override;
+	float GetCameraFOV() const;
 
 	void SetCamera(const CVector3D& pos, float rotX, float rotY, float zoom, float fov) override;
 	void MoveCameraTarget(const CVector3D& target) override;

@@ -95,3 +95,12 @@ long.*.po
 
 # OSX specific data
 .DS_Store
+binaries/system/graphics_dbg.lib
+binaries/system/pyrogenesis_dbg.ilk
+binaries/system/simulation2_dbg.lib
+binaries/system/test_dbg.ilk
+binaries/system/test_dbg.pdb
+libraries/win32/wxwidgets/lib/vc_lib/wxmsw32u_core.lib
+libraries/win32/wxwidgets/lib/vc_lib/wxmsw32ud_core.lib
+binaries/system/test_dbg.pdb
+binaries/system/test_dbg.pdb
