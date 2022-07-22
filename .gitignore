@@ -104,3 +104,4 @@ libraries/win32/wxwidgets/lib/vc_lib/wxmsw32u_core.lib
 libraries/win32/wxwidgets/lib/vc_lib/wxmsw32ud_core.lib
 binaries/system/test_dbg.pdb
 binaries/system/test_dbg.pdb
+binaries/system/test_dbg.pdb

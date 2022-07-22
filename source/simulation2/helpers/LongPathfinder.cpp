@@ -661,7 +661,7 @@ int LongPathfinder::HasJumpedVert(int i, int j, int dj, PathfinderState& state, 
  * We never cache diagonal jump points - they're usually so frequent that
  * a linear search is about as cheap and avoids the setup cost and memory cost.
  */
-void LongPathfinder::AddJumpedDiag(int i, int j, int di, int dj, PathCost g, PathfinderState& state) const
+void LongPathfinder::AddJumpedDiag(const int i, const int j, const int di, const int dj, PathCost g,  PathfinderState& state) const
 {
 	// 	ProcessNeighbour(i, j, i + di, j + dj, g, state);
 	// 	return;
@@ -671,7 +671,8 @@ void LongPathfinder::AddJumpedDiag(int i, int j, int di, int dj, PathCost g, Pat
 
 	int ni = i + di;
 	int nj = j + dj;
-	bool detectGoal = OnTheWay(i, j, di, dj, state.iGoal, state.jGoal);
+	const bool detectGoal = OnTheWay(i, j, di, dj, state.iGoal, state.jGoal);
+
 	while (true)
 	{
 		// Stop if we hit an obstructed cell
@@ -709,13 +710,16 @@ void LongPathfinder::AddJumpedDiag(int i, int j, int di, int dj, PathCost g, Pat
 
 		ni += di;
 		nj += dj;
+
 	}
 }
 
 void LongPathfinder::ComputeJPSPath(const HierarchicalPathfinder& hierPath, entity_pos_t x0, entity_pos_t z0, const PathGoal& origGoal, pass_class_t passClass, WaypointPath& path) const
 {
 	PROFILE2("ComputePathJPS");
+	TIMER_BEGIN(L"computeJPSPath");
 	PathfinderState state = { 0 };
+
 
 	if (m_UseJPSCache)
 	{
@@ -915,6 +919,8 @@ void LongPathfinder::ComputeJPSPath(const HierarchicalPathfinder& hierPath, enti
 	}
 	else
 		SAFE_DELETE(state.tiles);
+
+	TIMER_END(L"computeJPSPath");
 }
 
 #undef PASSABLE

@@ -28,7 +28,8 @@ namespace Pathfinding
 {
 	bool CheckLineMovement(entity_pos_t x0, entity_pos_t z0, entity_pos_t x1, entity_pos_t z1,
 								  pass_class_t passClass, const Grid<NavcellData>& grid)
-	{
+	{	
+
 		// We shouldn't allow lines between diagonally-adjacent navcells.
 		// It doesn't matter whether we allow lines precisely along the edge
 		// of an impassable navcell.
